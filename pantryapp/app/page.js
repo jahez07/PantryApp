@@ -1,34 +1,29 @@
 'use client'
 import { firestore } from "@/firebase";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Firestore, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { query } from "firebase/firestore";
 
-const item = [
-  "tomato",
-  "potato",
-  "garlic",
-  "ginger",
-  "carrot",
-  "cucumber",
-  "brinjal",
-  "apple",
-  "orange",
-  "mango",
-]
 
 export default function Home() {
+  const [pantry, setPantry] = useState([])
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   useEffect(() => {
     const updatePantry = async () => {
       const snapshot = query(collection(firestore, 'pantry'))
       const docs = await  getDocs(snapshot)
       const pantryList = []
       docs.forEach((doc) => {
-        console.log(doc.id)
         pantryList.push(doc.id)
       })
+      console.log(pantryList)
+      setPantry(pantryList)
     }
     updatePantry()
   }, [])
@@ -40,7 +35,9 @@ export default function Home() {
       justifyContent={"center"}
       flexDirection={"column"}
       alignItems={"center"}
+      gap={2}
     >
+      <Button variant="contained">Add Item</Button>
       <Box border={"1px solid #333"}>
         <Box
           width="800px"
@@ -55,11 +52,11 @@ export default function Home() {
           </Typography>
         </Box>
         <Stack width="800px" height="300px" spacing={2} overflow={"auto"}>
-          {item.map((i) => (
+          {pantry.map((i) => (
             <Box
               key={i}
               width="100%"
-              height="100px"
+              minHeight="150px"
               display={"flex"}
               justifyContent={"center"}
               alignItems={"center"}
