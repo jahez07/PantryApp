@@ -1,5 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
+const item = ["tomato", "potato", "garlic", "ginger", "carrot"];
 export default function Home() {
   return (
     <Box
@@ -8,6 +9,8 @@ export default function Home() {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
-    ></Box>
+    >
+      <Stack width="800px" height="600px" spacing={2}></Stack>
+    </Box>
   );
 }
