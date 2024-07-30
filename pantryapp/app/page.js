@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { Firestore, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { useEffect } from "react";
+import { query } from "firebase/firestore";
 
 const item = [
   "tomato",
@@ -16,17 +17,18 @@ const item = [
   "apple",
   "orange",
   "mango",
-];
+]
+
 export default function Home() {
-  useEffect(() =>{
+  useEffect(() => {
     const updatePantry = async () => {
-    const snapshot = query(collection(firestore, 'pantry'))
-    const docs = await  getDocs(snapshot)
-    docs.forEach((doc) => {
-      console.log(doc.id, doc.data())
-    })
-  }
-  updatePantry()
+      const snapshot = query(collection(firestore, 'pantry'))
+      const docs = await  getDocs(snapshot)
+      docs.forEach((doc) => {
+        console.log(doc.id, doc.data())
+      })
+    }
+    updatePantry()
   }, [])
   return (
     <Box
