@@ -3,9 +3,11 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const apiKey = process.env.firebase_api_key;
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: apiKey,
   authDomain: "pantryapp-252c3.firebaseapp.com",
   projectId: "pantryapp-252c3",
   storageBucket: "pantryapp-252c3.appspot.com",
