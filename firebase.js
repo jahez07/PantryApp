@@ -10,8 +10,9 @@ const firebaseConfig = {
   projectId: "pantryapp-252c3",
   storageBucket: "pantryapp-252c3.appspot.com",
   messagingSenderId: "941642895099",
-  appId: "1:941642895099:web:db45effb5cbb2f2d336a5e"
+  appId: "1:941642895099:web:db45effb5cbb2f2d336a5e",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export { app, firebaseConfig };
