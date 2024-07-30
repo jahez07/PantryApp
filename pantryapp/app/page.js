@@ -24,8 +24,10 @@ export default function Home() {
     const updatePantry = async () => {
       const snapshot = query(collection(firestore, 'pantry'))
       const docs = await  getDocs(snapshot)
+      const pantryList = []
       docs.forEach((doc) => {
-        console.log(doc.id, doc.data())
+        console.log(doc.id)
+        pantryList.push(doc.id)
       })
     }
     updatePantry()
