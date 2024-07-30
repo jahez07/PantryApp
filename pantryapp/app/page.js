@@ -1,4 +1,9 @@
+'use client'
+import { firestore } from "@/firebase";
 import { Box, Stack, Typography } from "@mui/material";
+import { Firestore, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+import { useEffect } from "react";
 
 const item = [
   "tomato",
@@ -13,6 +18,16 @@ const item = [
   "mango",
 ];
 export default function Home() {
+  useEffect(() =>{
+    const updatePantry = async () => {
+    const snapshot = query(collection(firestore, 'pantry'))
+    const docs = await  getDocs(snapshot)
+    docs.forEach((doc) => {
+      console.log(doc.id, doc.data())
+    })
+  }
+  updatePantry()
+  }, [])
   return (
     <Box
       width="100vw"
