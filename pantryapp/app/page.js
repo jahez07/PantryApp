@@ -1,7 +1,7 @@
 "use client";
 import { firestore } from "@/firebase";
 import { Box, Button, Stack, Typography, Modal } from "@mui/material";
-import { Firestore, getDocs } from "firebase/firestore";
+import { deleteDoc, Firestore, getDocs } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { query } from "firebase/firestore";
@@ -18,6 +18,20 @@ const style = {
   p: 4,
 };
 
+const removeItem = async (item) => {
+  const docRef = doc(collection(firestore, 'pantry'), item)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    const {count} = docSnap.data()
+    if (count === 1) {
+      await deleteDoc(docRef)
+    } else {
+      await updateDoc(docRef, {count: count - 1})
+    }
+  }
+  await updatePantry()
+}
 
 export default function Home() {
   const [pantry, setPantry] = useState([]);
@@ -40,6 +54,8 @@ export default function Home() {
     };
     updatePantry();
   }, []);
+
+   
   return (
     <Box
       width="100vw"
