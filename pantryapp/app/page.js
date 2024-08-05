@@ -168,6 +168,7 @@ export default function Home() {
               <Typography variant={"h2"} color={"#333"} textAlign={"center"}>
                 {count}
               </Typography>
+              <Stack direction={"row"} spacing={1}>
               <Button
                 variant="contained"
                 color="error"
@@ -175,6 +176,14 @@ export default function Home() {
               >
                 Remove
               </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => addItem(name)}
+              >
+                Add
+              </Button>
+              </Stack>
             </Box>
           ))}
         </Stack>
