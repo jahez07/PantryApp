@@ -7,41 +7,40 @@ import { useEffect, useState } from "react";
 import { query } from "firebase/firestore";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'white',
-  border: '2px solid #000',
+  bgcolor: "white",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
 const removeItem = async (item) => {
-  const docRef = doc(collection(firestore, 'pantry'), item)
-  const docSnap = await getDoc(docRef)
+  const docRef = doc(collection(firestore, "pantry"), item);
+  const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const {count} = docSnap.data()
+    const { count } = docSnap.data();
     if (count === 1) {
-      await deleteDoc(docRef)
+      await deleteDoc(docRef);
     } else {
-      await updateDoc(docRef, {count: count - 1})
+      await updateDoc(docRef, { count: count - 1 });
     }
   }
-  await updatePantry()
-}
+  await updatePantry();
+};
 
 export default function Home() {
   const [pantry, setPantry] = useState([]);
 
   const [open, setOpen] = useState(false);
-  const [itemName, setItemName] = useState('')
+  const [itemName, setItemName] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
     const updatePantry = async () => {
       const snapshot = query(collection(firestore, "pantry"));
       const docs = await getDocs(snapshot);
@@ -52,10 +51,12 @@ export default function Home() {
       console.log(pantryList);
       setPantry(pantryList);
     };
-    updatePantry();
-  }, []);
 
-   
+    useEffect(() =>{
+      updatePantry();
+    }, [])
+  
+
   return (
     <Box
       width="100vw"
