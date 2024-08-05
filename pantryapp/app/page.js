@@ -18,21 +18,6 @@ const style = {
   p: 4,
 };
 
-const removeItem = async (item) => {
-  const docRef = doc(collection(firestore, "pantry"), item);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    const { count } = docSnap.data();
-    if (count === 1) {
-      await deleteDoc(docRef);
-    } else {
-      await updateDoc(docRef, { count: count - 1 });
-    }
-  }
-  await updatePantry();
-};
-
 export default function Home() {
   const [pantry, setPantry] = useState([]);
 
@@ -50,6 +35,21 @@ export default function Home() {
       });
       console.log(pantryList);
       setPantry(pantryList);
+    };
+
+    const removeItem = async (item) => {
+      const docRef = doc(collection(firestore, "pantry"), item);
+      const docSnap = await getDoc(docRef);
+    
+      if (docSnap.exists()) {
+        const { count } = docSnap.data();
+        if (count === 1) {
+          await deleteDoc(docRef);
+        } else {
+          await updateDoc(docRef, { count: count - 1 });
+        }
+      }
+      await updatePantry();
     };
 
     useEffect(() =>{
@@ -89,12 +89,12 @@ export default function Home() {
         <Box
           width="800px"
           height="100px"
-          bgcolor="#ADD8E6"
+          bgcolor="#999"
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography variant={"h2"} color={"#333"} textAlign={"center"}>
+          <Typography variant={"h2"} color={"#333"} textAlign={"center"} fontWeight={"bold"}>
             Pantry Items
           </Typography>
         </Box>
