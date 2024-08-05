@@ -1,4 +1,5 @@
 "use client";
+import { firestore } from "@/firebase";
 import {
   Box,
   Button,
@@ -7,8 +8,10 @@ import {
   Modal,
   TextField,
 } from "@mui/material";
+import { deleteDoc, getDocs } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { doc, query, getDoc, setDoc, collection, deleteDoc, getDocs, firestore } from "firebase/firestore";
+import { query, getDoc, doc, setDoc } from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -48,6 +51,7 @@ export default function Home() {
     setPantry(pantryList);
   };
 
+  // A D D  I T E M  T O  P A N T R Y
   const addItem = async (item) => {
     const docRef = doc(collection(firestore, "pantry"), item);
     const docSnap = await getDoc(docRef);
